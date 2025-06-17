@@ -1,0 +1,34 @@
+✅ Step 1: Create a Reusable JavaScript File
+
+Create a file named tts.js in your project (e.g., in a js or scripts folder). Here's the content for tts.js:
+
+// tts.js
+
+let synth = window.speechSynthesis;
+let utterance;
+
+function speakTextFromContainer(containerId = "tts-container") {
+  stopText();
+  const container = document.getElementById(containerId);
+  if (container) {
+    const text = container.innerText;
+    utterance = new SpeechSynthesisUtterance(text);
+    synth.speak(utterance);
+  } else {
+    console.warn("TTS container not found: " + containerId);
+  }
+}
+
+function pauseText() {
+  if (synth.speaking && !synth.paused) {
+    synth.pause();
+  } else if (synth.paused) {
+    synth.resume();
+  }
+}
+
+function stopText() {
+  if (synth.speaking) {
+    synth.cancel();
+  }
+}
